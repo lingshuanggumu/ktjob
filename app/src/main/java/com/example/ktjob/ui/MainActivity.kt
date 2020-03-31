@@ -2,16 +2,15 @@ package com.example.ktjob.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.marginLeft
 import com.bumptech.glide.Glide
 import com.example.ktjob.R
 import com.example.ktjob.db.LocationDatabase
@@ -21,6 +20,8 @@ import com.example.ktjob.json.WeatherResult
 import com.example.ktjob.model.WeatherModel
 import com.example.ktjob.net.RetrofitHelper
 import com.example.ktjob.net.WeatherApi
+import com.example.showui.model.BarBean
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
     private lateinit var mWeatherImage: ImageView
 
+    private lateinit var mBtJetpack: Button
+
+    private lateinit var mBtTranslation: Button
+
+    //private lateinit var mBar: BarChartView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(tag, "onCreate")
@@ -59,30 +66,67 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
         mWeatherCondition = findViewById(R.id.weather_condtion)
         mWeatherTemperature = findViewById(R.id.weather_temperature)
         mWeatherImage = findViewById(R.id.weather_condtion_img)
+        mBtJetpack = findViewById(R.id.jetpack_module)
+
+        mBtTranslation = findViewById(R.id.translation_module)
 
         //Glide.with(this).load(R.drawable.cond_999).into(mWeatherImage)
 
-        mLocation.setOnClickListener { view ->
+        mLocation.setOnClickListener {
             startActivity(Intent(this, LocationActivity::class.java))
             //finish()
         }
 
+        mBtJetpack.setOnClickListener {
+            startActivity(Intent(this, JetpackActivity::class.java))
+        }
+
+        mWeatherImage.setOnClickListener {
+            startActivity(Intent(this, ConditionActivity::class.java))
+        }
+
+        mBtTranslation.setOnClickListener {
+            startActivity(Intent(this, TranslationActivity::class.java))
+        }
+
         var sharedPreference = getSharedPreferences(WeatherModel.mSPName, Context.MODE_PRIVATE)
         if (sharedPreference.contains(WeatherModel.mSPLocationKey)) {
-            //WeatherModel.mAreaName = sharedPreference.getString(WeatherModel.mSPLocationKey, WeatherModel.mAreaName)
-            WeatherModel.mAreaName = sharedPreference.getString(WeatherModel.mSPLocationKey, WeatherModel.mAreaName)
-            WeatherModel.mAreaCode = sharedPreference.getString(WeatherModel.mSPCodeKey, WeatherModel.mAreaCode)
-            Log.i(tag, "onCreate " + WeatherModel.mAreaName)
+            WeatherModel.run {
+                mAreaName = sharedPreference.getString(mSPLocationKey, mAreaName)
+                mAreaCode = sharedPreference.getString(mSPCodeKey, mAreaCode)
+                Log.i(tag, "onCreate ".plus(mAreaName))
+            }
+
         } else {
             var editor = sharedPreference.edit()
-            editor.putString(WeatherModel.mSPLocationKey, WeatherModel.mAreaName)
-            editor.putString(WeatherModel.mSPCodeKey, WeatherModel.mAreaCode)
+            WeatherModel.run {
+                editor.putString(mSPLocationKey, mAreaName)
+                editor.putString(mSPCodeKey, mAreaCode)
+            }
             editor.commit()
         }
         GlobalScope.launch(Dispatchers.IO) {
             var area = LocationDatabase.getInstance(this@MainActivity).getAreaDao().getArea(WeatherModel.mAreaCode)
             WeatherModel.getInstance().setCurrentLocation(area)
         }
+
+        //initBarDatas()
+    }
+
+    private fun initBarDatas() {
+        val barBean0 = BarBean(30f, "描述一")
+        val barBean1 = BarBean(25f, "描述二")
+        val barBean2 = BarBean(10f, "描述三")
+        val barBean3 = BarBean(15f, "描述四")
+        val barBean4 = BarBean(20f, "描述五")
+        val barBeans: MutableList<BarBean> = ArrayList()
+        barBeans.add(barBean0)
+        barBeans.add(barBean1)
+        barBeans.add(barBean2)
+        barBeans.add(barBean3)
+        barBeans.add(barBean4)
+
+        weather_bar.setData(barBeans)
     }
 
     private fun getScreenInfo() {

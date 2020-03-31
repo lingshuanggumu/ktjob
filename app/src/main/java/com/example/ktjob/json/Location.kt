@@ -1,7 +1,5 @@
 package com.example.ktjob.json
 
-import androidx.room.Entity
-
 data class Location(
     val province: List<Province>
 )

@@ -7,6 +7,31 @@
         android:orientation="vertical"
         tools:context=".ui.MainActivity">
     <LinearLayout
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+        <Button
+                android:id="@+id/weather_module"
+                android:text="天气"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        <Button
+                android:id="@+id/xima_module"
+                android:text="电台"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        <Button
+                android:id="@+id/jetpack_module"
+                android:text="Jetpack"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        <Button
+                android:id="@+id/translation_module"
+                android:text="翻译"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal">
@@ -46,5 +71,17 @@
             android:src="@drawable/cond_999"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <com.example.showui.chart.BarChartView
+            android:visibility="gone"
+            android:id="@+id/weather_bar"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    <com.example.showui.chart.PathView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <com.example.showui.chart.GuaCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 </LinearLayout>
