@@ -1,4 +1,4 @@
-package com.example.ktjob.net
+package com.example.jobutils
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -6,16 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitHelper {
     companion object {
-        const val mWeatherUrl = "https://free-api.heweather.net/s6/weather/"
-
-        const val mWeatherUserKey = "ff86cd581608458991f4745593274876"
-
-        const val mTranslationUrl = "http://api.yeekit.com/"
-
-        const val mTranslationAppID = "5e82ba7bc0f7d"
-
-        const val mTranslationKey = "cb93101609b19a8bc463a5df70347a08"
-
         private val mOkHttpClient: OkHttpClient = OkHttpClient.Builder().build()
 
         fun <T> createApi(clazz: Class<T>, url: String): T {

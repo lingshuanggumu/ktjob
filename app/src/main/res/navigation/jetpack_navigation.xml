@@ -9,11 +9,17 @@
             android:name="com.example.ktjob.fragment.JetPackFragment1"
             android:label="fragment_first"
             tools:layout="@layout/layout_jetpack_frag1">
+        <action
+            android:id="@+id/frag1_action"
+            app:destination="@+id/frag2"/>
     </fragment>
     <fragment
             android:id="@+id/frag2"
             android:name="com.example.ktjob.fragment.JetPackFragment2"
             android:label="fragment_second"
             tools:layout="@layout/layout_jetpack_frag2">
+        <action
+                android:id="@+id/frag2_action"
+                app:destination="@+id/frag1"/>
     </fragment>
 </navigation>

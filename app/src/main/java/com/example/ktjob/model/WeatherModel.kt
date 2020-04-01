@@ -14,6 +14,10 @@ class WeatherModel {
     }
 
     companion object {
+        const val mWeatherUrl = "https://free-api.heweather.net/s6/weather/"
+
+        const val mWeatherUserKey = "ff86cd581608458991f4745593274876"
+
         val mSPName = "Weather"
 
         val mSPLocationKey = "Area"

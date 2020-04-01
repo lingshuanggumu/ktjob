@@ -1,4 +1,4 @@
-package com.example.ktjob.json
+package com.example.jobutils
 
 import com.google.gson.Gson
 

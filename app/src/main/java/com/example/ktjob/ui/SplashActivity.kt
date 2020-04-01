@@ -1,27 +1,18 @@
 package com.example.ktjob.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.JsonReader
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.ktjob.R
 import com.example.ktjob.db.*
-import com.example.ktjob.json.City
-import com.example.ktjob.json.GsonUtil
+import com.example.jobutils.GsonUtil
 import com.example.ktjob.json.Location
-import com.google.gson.JsonObject
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
-import java.io.BufferedReader
-import java.io.File
 import java.io.InputStream
-import java.io.InputStreamReader
 
 
 class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
@@ -66,7 +57,7 @@ class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     suspend fun exitSplash() {
         Log.i(tag, "exitSplash")
-        delay(5000)
+        delay(500)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
@@ -75,7 +66,7 @@ class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
         //val resultType = object : TypeToken<Location>() {}.type
         val inputStream = resources.openRawResource(R.raw.city_code)
         val jsonData: String = readFileToString(inputStream)
-        val location: Location = GsonUtil.getGson().fromJson(jsonData, Location::class.java)
+        val location: Location = com.example.jobutils.GsonUtil.getGson().fromJson(jsonData, Location::class.java)
         Log.i(tag, "updateLocationDb")
         LocationDatabase.getInstance(this).getDbInfoDao().insert(DbInfo(true))
         location.province.forEach {

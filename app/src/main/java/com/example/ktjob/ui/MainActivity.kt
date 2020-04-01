@@ -12,13 +12,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide
+import com.example.facegate.ui.FaceActivity
 import com.example.ktjob.R
 import com.example.ktjob.db.LocationDatabase
 import com.example.ktjob.db.WeatherDatabase
 import com.example.ktjob.db.WeatherHistory
 import com.example.ktjob.json.WeatherResult
 import com.example.ktjob.model.WeatherModel
-import com.example.ktjob.net.RetrofitHelper
+import com.example.jobutils.RetrofitHelper
 import com.example.ktjob.net.WeatherApi
 import com.example.showui.model.BarBean
 import kotlinx.android.synthetic.main.content_main.*
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
     private val mPadding = 20
 
-    private val mWeatherApi: WeatherApi = RetrofitHelper.createApi(WeatherApi::class.java, RetrofitHelper.mWeatherUrl)
+    private val mWeatherApi: WeatherApi = RetrofitHelper.createApi(WeatherApi::class.java, WeatherModel.mWeatherUrl)
 
     private var mScreenWidth: Int = 0
 
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
     private lateinit var mBtTranslation: Button
 
+    private lateinit var mBtFace: Button
+
     //private lateinit var mBar: BarChartView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
         mWeatherTemperature = findViewById(R.id.weather_temperature)
         mWeatherImage = findViewById(R.id.weather_condtion_img)
         mBtJetpack = findViewById(R.id.jetpack_module)
-
+        mBtFace = findViewById(R.id.face_module)
         mBtTranslation = findViewById(R.id.translation_module)
 
         //Glide.with(this).load(R.drawable.cond_999).into(mWeatherImage)
@@ -79,6 +82,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
         mBtJetpack.setOnClickListener {
             startActivity(Intent(this, JetpackActivity::class.java))
+            finish()
         }
 
         mWeatherImage.setOnClickListener {
@@ -87,6 +91,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
         mBtTranslation.setOnClickListener {
             startActivity(Intent(this, TranslationActivity::class.java))
+        }
+
+        mBtFace.setOnClickListener {
+            startActivity(Intent(this, FaceActivity::class.java))
         }
 
         var sharedPreference = getSharedPreferences(WeatherModel.mSPName, Context.MODE_PRIVATE)
@@ -151,7 +159,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
 
         Log.i(tag, "onResume, area " + WeatherModel.mAreaName)
         var queryMap = mapOf("location" to WeatherModel.mAreaName)
-        mWeatherApi.requestForecast("now", RetrofitHelper.mWeatherUserKey, queryMap)
+        mWeatherApi.requestForecast("now", WeatherModel.mWeatherUserKey, queryMap)
             .enqueue(object: Callback<WeatherResult> {
                 override fun onResponse(call: Call<WeatherResult>?, response: Response<WeatherResult>?) {
                     Log.i(tag, "onResponse: " + response.toString())
