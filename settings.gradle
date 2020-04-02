@@ -1,1 +1,1 @@
-include ':app', ':xiamalaya', ':showui', ':facegate', ':jobutils', ':sound'
+include ':app', ':xiamalaya', ':showui', ':facegate', ':jobutils'
