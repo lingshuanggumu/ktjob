@@ -1,5 +1,5 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.example.facegate"
+        //applicationId "com.example.facegate"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
