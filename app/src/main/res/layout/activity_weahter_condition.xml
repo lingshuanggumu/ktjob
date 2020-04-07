@@ -8,6 +8,10 @@
         tools:context=".ui.ConditionActivity">
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/condition_icon_list"
+            android:scrollbars="vertical"
+            android:scrollbarSize="15px"
+            android:scrollbarStyle="insideOverlay"
+            android:fadeScrollbars="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
