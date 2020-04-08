@@ -72,6 +72,7 @@ class WeatherActivity : AppCompatActivity(), CoroutineScope by MainScope(),
         mTabLayout = findViewById(R.id.weather_tab)
         mViewPager = findViewById(R.id.weather_viewpager)
         mTabLayout.addOnTabSelectedListener(this)
+        mViewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
         /*mBtJetpack.setOnClickListener {
             startActivity(Intent(this, JetpackActivity::class.java))
@@ -219,7 +220,7 @@ class WeatherActivity : AppCompatActivity(), CoroutineScope by MainScope(),
                 removeFromTab()
             }
             R.id.action_refresh -> {
-
+                startActivity(Intent(this@WeatherActivity, ConditionActivity::class.java))
             }
         }
         return true
