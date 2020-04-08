@@ -19,6 +19,9 @@ interface AreaDao {
     @Query("SELECT * FROM area WHERE area_code = :code")
     fun getArea(code: String): AreaItem
 
+    @Query("SELECT * FROM area")
+    fun getAllArea(): List<AreaItem>
+
     @Query("DELETE FROM area")
     fun deleteAll()
 }

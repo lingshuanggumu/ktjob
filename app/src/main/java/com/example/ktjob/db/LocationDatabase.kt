@@ -19,7 +19,7 @@ abstract class LocationDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance : LocationDatabase? = null
-        fun getInstance(context: Context) : LocationDatabase{
+        fun init(context: Context) : LocationDatabase{
             if (instance == null){
                 synchronized(LocationDatabase::class){
                     if (instance == null){
@@ -28,6 +28,10 @@ abstract class LocationDatabase : RoomDatabase() {
                     }
                 }
             }
+            return instance!!
+        }
+
+        fun getInstance() : LocationDatabase{
             return instance!!
         }
     }

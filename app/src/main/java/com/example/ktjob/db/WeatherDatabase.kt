@@ -16,7 +16,7 @@ abstract class WeatherDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance : WeatherDatabase? = null
-        fun getInstance(context: Context) : WeatherDatabase{
+        fun init(context: Context) : WeatherDatabase{
             if (instance == null){
                 synchronized(WeatherDatabase::class){
                     if (instance == null){
@@ -25,6 +25,10 @@ abstract class WeatherDatabase : RoomDatabase() {
                     }
                 }
             }
+            return instance!!
+        }
+
+        fun getInstance() : WeatherDatabase{
             return instance!!
         }
     }

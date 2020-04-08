@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <ImageView
+            android:id="@+id/weather_condtion_img"
+            android:src="@drawable/cond_999"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/weather_image_marginTop"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/weather_temperature"
+              android:layout_marginTop="@dimen/weather_cond_marginTop"
+              android:layout_height="@dimen/weather_cond_height"
+              android:layout_width="@dimen/weather_cond_width"
+              app:layout_constraintHorizontal_bias="0.3"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/weather_condtion_img"
+              android:textAlignment="center"
+              android:gravity="center"
+              android:text="temperature"/>
+    <TextView android:id="@+id/weather_condtion"
+              android:layout_marginTop="@dimen/weather_cond_marginTop"
+              android:layout_height="@dimen/weather_cond_height"
+              android:layout_width="@dimen/weather_cond_width"
+              app:layout_constraintHorizontal_bias="0.7"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/weather_condtion_img"
+              android:textAlignment="center"
+              android:gravity="center"
+              android:text="condition"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

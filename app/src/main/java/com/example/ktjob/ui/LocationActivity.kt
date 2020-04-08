@@ -11,7 +11,6 @@ import com.example.ktjob.adapter.AreaItemAdapter
 import com.example.ktjob.adapter.CityItemAdapter
 import com.example.ktjob.adapter.ProvinceItemAdapter
 import com.example.ktjob.db.*
-import com.example.ktjob.json.Area
 import com.example.ktjob.model.WeatherModel
 import kotlinx.coroutines.*
 
@@ -30,7 +29,7 @@ class LocationActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
             if (location is ProvinceItem) {
                 GlobalScope.launch(Dispatchers.IO) {
                     Log.i(tag, "getCityList")
-                    var citys: List<CityItem> = LocationDatabase.getInstance(this@LocationActivity)
+                    var citys: List<CityItem> = LocationDatabase.getInstance()
                         .getCityDao().getProvinceCity(location.code as String)
                     withContext(Dispatchers.Main) {
                         var adapter = CityItemAdapter(citys, this@LocationActivity)
@@ -40,7 +39,7 @@ class LocationActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
             } else if (location is CityItem) {
                 GlobalScope.launch(Dispatchers.IO) {
                     Log.i(tag, "getAreaList")
-                    var areas: List<AreaItem> = LocationDatabase.getInstance(this@LocationActivity)
+                    var areas: List<AreaItem> = LocationDatabase.getInstance()
                         .getAreaDao().getCityArea(location.cityCode as String)
                     withContext(Dispatchers.Main) {
                         var adapter = AreaItemAdapter(areas, this@LocationActivity)
@@ -48,19 +47,21 @@ class LocationActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
                     }
                 }
             } else if (location is AreaItem) {
-                var sharedPreference = getSharedPreferences(WeatherModel.mSPName, Context.MODE_PRIVATE)
-                var editor = sharedPreference.edit()
-                WeatherModel.mAreaName = location.areaName as String
-                WeatherModel.mAreaCode = location.areaCode as String
-                Log.i(tag, "change area " + WeatherModel.mAreaName)
-                editor.putString(WeatherModel.mSPLocationKey, WeatherModel.mAreaName)
-                editor.putString(WeatherModel.mSPCodeKey, WeatherModel.mAreaCode)
-                editor.commit()
-                GlobalScope.launch(Dispatchers.IO) {
-                    WeatherDatabase.getInstance(this@LocationActivity).getAreaDao().update(location)
+                if (!WeatherModel.mAreaCode.equals(location.areaCode)) {
+                    var sharedPreference = getSharedPreferences(WeatherModel.mSPName, Context.MODE_PRIVATE)
+                    var editor = sharedPreference.edit()
+                    //WeatherModel.mAreaName = location.areaName as String
+                    //WeatherModel.mAreaCode = location.areaCode as String
                     WeatherModel.getInstance().setCurrentLocation(location)
+                    Log.i(tag, "change area " + location.areaName)
+                    editor.putString(WeatherModel.mSPLocationKey, location.areaName)
+                    editor.putString(WeatherModel.mSPCodeKey, location.areaCode)
+                    editor.commit()
+                    GlobalScope.launch(Dispatchers.IO) {
+                        WeatherModel.getInstance().addFavorArea(location)
+                    }
                 }
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, WeatherActivity::class.java))
                 finish()
             }
         }
@@ -80,7 +81,7 @@ class LocationActivity : AppCompatActivity(), CoroutineScope by MainScope()  {
     private fun showProvinceList() {
         GlobalScope.launch(Dispatchers.IO) {
             Log.i(tag, "getProvinceList")
-            var provinces: List<ProvinceItem> = LocationDatabase.getInstance(this@LocationActivity).getProvinceDao().getAll()
+            var provinces: List<ProvinceItem> = LocationDatabase.getInstance().getProvinceDao().getAll()
 
             withContext(Dispatchers.Main) {
                 var adapter = ProvinceItemAdapter(provinces, this@LocationActivity)

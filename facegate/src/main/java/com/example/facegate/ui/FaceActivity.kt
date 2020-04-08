@@ -39,11 +39,12 @@ class FaceActivity : AppCompatActivity() {
 
     private fun requestPermission() {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-            || ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
+            || ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED
+            || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, arrayOf(
                 Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-            ), mRequestCode)
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE), mRequestCode)
         } else {
             setupView(this)
         }

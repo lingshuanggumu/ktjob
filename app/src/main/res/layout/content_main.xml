@@ -1,87 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.WeatherActivity">
+
     <LinearLayout
             android:layout_gravity="top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="50dp">
         <Button
                 android:id="@+id/face_module"
+                android:visibility="gone"
                 android:text="人脸"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
         <Button
                 android:id="@+id/xima_module"
+                android:visibility="gone"
                 android:text="电台"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
         <Button
                 android:id="@+id/jetpack_module"
+                android:visibility="gone"
                 android:text="Jetpack"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
         <Button
                 android:id="@+id/translation_module"
+                android:visibility="gone"
                 android:text="翻译"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
     </LinearLayout>
-    <LinearLayout
+
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/weather_tab"
+            android:background="#008577"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal">
-        <TextView android:id="@+id/weather_location"
-                  android:paddingTop="50dp"
-                  android:layout_height="match_parent"
-                  android:layout_width="match_parent"
-                  android:textAlignment="center"
-                  android:text="location"/>
-    </LinearLayout>
-    <LinearLayout
+            android:layout_height="50dp" />
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/weather_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/weather_info"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:layout_gravity="center_horizontal">
-        <TextView android:id="@+id/weather_temperature"
-                  android:layout_height="match_parent"
-                  android:layout_width="wrap_content"
-                  android:textAlignment="center"
-                  android:layout_gravity="left"
-                  android:gravity="center"
-                  android:layout_marginLeft="20dp"
-                  android:text="temperature"/>
-        <TextView android:id="@+id/weather_condtion"
-                  android:layout_height="match_parent"
-                  android:layout_width="wrap_content"
-                  android:textAlignment="center"
-                  android:layout_gravity="right"
-                  android:gravity="center"
-                  android:layout_marginRight="20dp"
-                  android:text="condition"/>
-    </LinearLayout>
-    <ImageView
-            android:id="@+id/weather_condtion_img"
-            android:src="@drawable/cond_999"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_tab"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"/>
+
+    <FrameLayout
+            android:id="@+id/weather_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     <com.example.showui.chart.BarChartView
             android:visibility="gone"
             android:id="@+id/weather_bar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"/>
     <com.example.showui.chart.PathView
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"/>
     <com.example.showui.chart.GuaCardView
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:background="#FFFFFF"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/menu_navigation" />
+</androidx.constraintlayout.widget.ConstraintLayout>

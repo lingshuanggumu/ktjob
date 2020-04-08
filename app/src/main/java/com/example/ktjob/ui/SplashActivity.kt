@@ -9,7 +9,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.ktjob.R
 import com.example.ktjob.db.*
-import com.example.jobutils.GsonUtil
 import com.example.ktjob.json.Location
 import kotlinx.coroutines.*
 import java.io.InputStream
@@ -39,7 +38,7 @@ class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     fun showSplash() {
         GlobalScope.launch(Dispatchers.IO) {
             Log.i(tag, "showSplash")
-            var dbInfo = LocationDatabase.getInstance(this@SplashActivity).getDbInfoDao()
+            var dbInfo = LocationDatabase.getInstance().getDbInfoDao()
             if (dbInfo.get().isEmpty()) {
                 dbInfo.insert(DbInfo(true))
                 updateLocationDb()
@@ -57,8 +56,8 @@ class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     suspend fun exitSplash() {
         Log.i(tag, "exitSplash")
-        delay(500)
-        startActivity(Intent(this, MainActivity::class.java))
+        delay(2000)
+        startActivity(Intent(this, WeatherActivity::class.java))
         finish()
     }
 
@@ -68,18 +67,18 @@ class SplashActivity : AppCompatActivity(), CoroutineScope by MainScope() {
         val jsonData: String = readFileToString(inputStream)
         val location: Location = com.example.jobutils.GsonUtil.getGson().fromJson(jsonData, Location::class.java)
         Log.i(tag, "updateLocationDb")
-        LocationDatabase.getInstance(this).getDbInfoDao().insert(DbInfo(true))
+        LocationDatabase.getInstance().getDbInfoDao().insert(DbInfo(true))
         location.province.forEach {
             //Log.i(tag, it.name)
-            LocationDatabase.getInstance(this).getProvinceDao().insert(ProvinceItem(it))
+            LocationDatabase.getInstance().getProvinceDao().insert(ProvinceItem(it))
             if (it.city != null) {
                 val province = it
                 it.city.forEach {
-                    LocationDatabase.getInstance(this).getCityDao().insert(CityItem(province, it))
+                    LocationDatabase.getInstance().getCityDao().insert(CityItem(province, it))
                     if (it.area != null) {
                         val city = it
                         it.area.forEach {
-                            LocationDatabase.getInstance(this).getAreaDao().insert(AreaItem(province, city, it))
+                            LocationDatabase.getInstance().getAreaDao().insert(AreaItem(province, city, it))
                         }
                     }
                 }
